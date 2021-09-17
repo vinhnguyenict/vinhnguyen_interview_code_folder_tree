@@ -137,6 +137,18 @@ const TreeFolder = () => {
     })
   }, [treeData, searchValue]);
 
+  const renderChild = (childNode: DataNode) => {
+
+    return <TreeNode key={childNode.key} title={<TreeNodeFolder data={childNode} />}>
+      {
+        (childNode.children || []).map((childNode, idx) => {
+          return renderChild(childNode)
+        })
+      }
+    </TreeNode>
+  }
+
+
   return <React.Fragment>
     <TreeSelect
       style={{ width: '100%' }}
@@ -146,7 +158,7 @@ const TreeFolder = () => {
       placeholder="Select folder"
       treeDefaultExpandAll
       treeData={treeData}
-      onFocus={()=> setOpen(true)}
+      onFocus={() => setOpen(true)}
       dropdownRender={(props) => {
         return (
           <div>
@@ -167,7 +179,7 @@ const TreeFolder = () => {
                   return <TreeNode key={treeNode.key} title={<TreeNodeFolder data={treeNode} />}>
                     {
                       (treeNode.children || []).map((childNode, idx) => {
-                        return <TreeNode key={childNode.key} title={<TreeNodeFolder data={childNode} />} />
+                        return renderChild(childNode)
                       })
                     }
                   </TreeNode>
@@ -180,8 +192,8 @@ const TreeFolder = () => {
     >
     </TreeSelect>
 
-    <div style={{display: "flex", justifyContent: "end", width: "100%", marginTop: 20}}>
-      <Button style={{marginRight: 10}}>CANCEL</Button>
+    <div style={{ display: "flex", justifyContent: "end", width: "100%", marginTop: 20 }}>
+      <Button style={{ marginRight: 10 }}>CANCEL</Button>
       <Button type="primary">SAVE</Button>
     </div>
   </React.Fragment>
