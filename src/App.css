@@ -1,0 +1,5 @@
+@import "~antd/dist/antd.css";
+
+.folder-form {
+  min-width: 300px;
+}
